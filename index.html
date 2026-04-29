@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Login - Electoral Commission</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="index_style.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index_style.css">
 </head>
 <body>
-  <div class="login-container">
+  <div class="login-container glass-panel">
     <div class="logo-row">
-      <img src="school-logo.jpg" alt="Central University Law Students' Union Logo" class="school-logo">
-      <img src="electoral-commision.jpg" alt="LSU Electoral Commission Logo" class="login-logo">
+      <img src="assets/images/school-logo.jpg" alt="Central University Law Students' Union Logo" class="school-logo">
+      <img src="assets/images/electoral-commision.jpg" alt="LSU Electoral Commission Logo" class="login-logo">
     </div>
-    <h2>Hello Student,👋</h2>
+    <h2 class="text-gradient">Hello Student, 👋</h2>
     <form id="loginForm">
       <input type="text" id="idNumber" placeholder="Enter Your ID number" required>
       <input type="submit" value="Login">
     </form>
-    <button id="adminLoginBtn" style="margin-top: 18px; width: 100%;">Login as Admin</button>
+    <button id="adminLoginBtn" style="margin-top: 18px; width: 100%;" class="btn">Login as Admin</button>
   </div>
 
-  <script type="module" src="login.js" defer></script>
+  <script type="module" src="js/login.js" defer></script>
   <script>
     document.getElementById("adminLoginBtn").onclick = function() {
       window.location.href = "admin.html";

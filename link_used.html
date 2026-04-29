@@ -2,20 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Voting Link Used</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting Link Used - Electoral Commission</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index_style.css">
   <style>
-    body { font-family: Arial, sans-serif; background: #fffbe6; color: #333; text-align: center; padding-top: 10vh; }
-    .box { display: inline-block; padding: 2em 3em; background: #fff; border: 1px solid #f0c36d; border-radius: 8px; }
-    h1 { color: #d35400; }
+    .warning-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .box p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .box a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Voting Link Already Used</h1>
+  <div class="login-container glass-panel box">
+    <div class="warning-icon">⚠️</div>
+    <h2 class="text-gradient" style="color: var(--error-color);">Link Already Used</h2>
     <p>
-      This voting link has already been used.<br>
+      This voting link has already been used.<br><br>
       If you believe this is a mistake, please contact support at <a href="mailto:elections@yourdomain.com">elections@yourdomain.com</a>.
     </p>
+    <div style="margin-top: 24px;">
+      <button class="btn" onclick="window.location.href='index.html'" style="width: 100%;">Back to Login</button>
+    </div>
   </div>
 </body>
 </html>

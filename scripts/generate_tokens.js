@@ -7,7 +7,7 @@ const BASE_URL = "https://stephanbugbilla.github.io/law_voting_app/?token=";
 
 // Prepare CSV writer for output
 const csvWriter = createCsvWriter({
-  path: 'user_tokens.csv',
+  path: '../data/user_tokens.csv',
   header: [
     {id: 'idNumber', title: 'idNumber'},
     {id: 'phone', title: 'phone'},
@@ -18,7 +18,7 @@ const csvWriter = createCsvWriter({
 const users = [];
 
 // Read users.csv and generate token links
-fs.createReadStream('users.csv')
+fs.createReadStream('../data/users.csv')
   .pipe(csv())
   .on('data', (row) => {
     const idNumber = (row.idNumber || '').trim();

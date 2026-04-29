@@ -20,7 +20,7 @@ function formatPhone(phone) {
 }
 
 const csvWriter = createCsvWriter({
-  path: 'users.csv',
+  path: '../data/users.csv',
   header: [
     {id: 'name', title: 'name'},
     {id: 'idNumber', title: 'idNumber'},
@@ -37,7 +37,7 @@ const users = [];
 const seenUids = new Set();
 const duplicateUids = new Set();
 
-fs.createReadStream('Original.csv')
+fs.createReadStream('../data/Original.csv')
   .pipe(csv())
   .on('data', (row) => {
     // Format fields

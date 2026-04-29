@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account
-    </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Electoral Commission</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/index_style.css">
 </head>
 <body>
+  <div class="login-container glass-panel">
+    <div class="logo-row">
+      <img src="assets/images/school-logo.jpg" alt="Central University Law Students' Union Logo" class="school-logo">
+      <img src="assets/images/electoral-commision.jpg" alt="LSU Electoral Commission Logo" class="login-logo">
+    </div>
+    <h2 class="text-gradient">Create Account</h2>
     <form>
-        <input type="text" id="username" name="username" placeholder="Enter Your username" required>
-        <br>
-        <input type="text" id="idNumber" placeholder="Enter Your ID number"required>
-        <br>
-        <input type="email" id="email" placeholder="Enter Your Student Email" required>
-        <br>
-        <input type="password" id="password" placeholder="Enter Your password" required>
-        <br>
-        <input type="submit" id="submit" value="Create Account" >
+      <input type="text" id="username" name="username" placeholder="Enter Your username" required>
+      <input type="text" id="idNumber" placeholder="Enter Your ID number" required>
+      <input type="email" id="email" placeholder="Enter Your Student Email" required>
+      <input type="password" id="password" placeholder="Enter Your password" required>
+      <input type="submit" id="submit" value="Create Account" class="btn">
     </form>
-    <script type="module" src="create_account.js" defer></script>
+    <div style="margin-top: 16px;">
+      <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Back to Login</a>
+    </div>
+  </div>
+  <script type="module" src="js/create_account.js" defer></script>
 </body>
 </html>

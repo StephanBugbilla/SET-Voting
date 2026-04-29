@@ -2,7 +2,7 @@ const admin = require("firebase-admin");
 const fs = require("fs");
 const csv = require("csv-parser");
 
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = require("../config/serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -13,7 +13,7 @@ const db = admin.firestore();
 const users = [];
 
 // Read users from users.csv
-fs.createReadStream("users.csv")
+fs.createReadStream("../data/users.csv")
   .pipe(csv())
   .on("data", (row) => {
     users.push(row);

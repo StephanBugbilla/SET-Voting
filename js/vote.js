@@ -76,7 +76,7 @@ onAuthStateChanged(auth, async (user) => {
       const candidateDiv = document.createElement("div");
       candidateDiv.innerHTML = `
         <div class="candidate-photo">
-          <img src="${candidate.photoUrl || 'Candidate_photos/default-avatar.png'}" alt="${candidate.name || 'Candidate'}'s photo">
+          <img src="${candidate.photoUrl || 'assets/images/Candidate_photos/default-avatar.png'}" alt="${candidate.name || 'Candidate'}'s photo">
         </div>
         <p><strong>${candidate.name}</strong></p>
       `;
@@ -175,7 +175,7 @@ onAuthStateChanged(auth, async (user) => {
         // Always show image for all positions
         candidateDiv.innerHTML = `
           <div class="candidate-photo">
-            <img src="${candidate.photoUrl || 'Candidate_photos/default-avatar.png'}" alt="${candidate.name || 'Candidate'}'s photo">
+            <img src="${candidate.photoUrl || 'assets/images/Candidate_photos/default-avatar.png'}" alt="${candidate.name || 'Candidate'}'s photo">
           </div>
           <p><strong>${candidate.name || "No Name"}</strong></p>
         `;

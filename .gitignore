@@ -1,2 +1,3 @@
-node_modules
-serviceAccountKey.json
+node_modules/
+config/serviceAccountKey.json
+data/
