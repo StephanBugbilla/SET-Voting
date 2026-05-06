@@ -1,12 +1,13 @@
 const fs = require('fs');
 const csv = require('csv-parser');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 // =========================================================
 // =========================================================
 const credentials = {
-  apiKey: 'atsk_6cf0e4c728e8f8952833c6e8fec7101b13a9f685a6cdf58e69807a177a7729029a9f8897',
-  username: 'Stephanmanager'
+  apiKey: process.env.AFRICAS_TALKING_API_KEY,
+  username: process.env.AFRICAS_TALKING_USERNAME
 };
 
 // Initialize the SDK
