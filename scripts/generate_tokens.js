@@ -3,7 +3,7 @@ const csv = require('csv-parser');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 // Base URL for voting app
-const BASE_URL = "https://stephanbugbilla.github.io/law_voting_app/?token=";
+const BASE_URL = "https://stephanbugbilla.github.io/SET-Voting/?token=";
 
 // Prepare CSV writer for output
 const csvWriter = createCsvWriter({

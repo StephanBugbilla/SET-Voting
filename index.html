@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Login - Electoral Commission</title>
+  <title>Login - SET Voting Software</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/index_style.css">
 </head>
+
 <body>
   <div class="login-container glass-panel">
     <div class="logo-row">
-      <img src="assets/images/school-logo.jpg" alt="Central University Law Students' Union Logo" class="school-logo">
-      <img src="assets/images/electoral-commision.jpg" alt="LSU Electoral Commission Logo" class="login-logo">
+      <img src="assets/images/set_logo.jpg" alt="School of Engineering Students' Union Logo" class="school-logo">
+      <img src="assets/images/electoral-commision.jpg" alt="SET Electoral Commission Logo" class="login-logo">
     </div>
     <h2 class="text-gradient">Hello Student, 👋</h2>
     <form id="loginForm">
-      <input type="text" id="idNumber" placeholder="Enter Your ID number" required>
+      <input type="text" id="idNumber" placeholder="Enter Your CSC ID (e.g., CSC/22/01/0001)" required>
       <input type="submit" value="Login">
     </form>
     <button id="adminLoginBtn" style="margin-top: 18px; width: 100%;" class="btn">Login as Admin</button>
@@ -23,9 +25,10 @@
 
   <script type="module" src="js/login.js" defer></script>
   <script>
-    document.getElementById("adminLoginBtn").onclick = function() {
+    document.getElementById("adminLoginBtn").onclick = function () {
       window.location.href = "admin.html";
     };
   </script>
 </body>
+
 </html>

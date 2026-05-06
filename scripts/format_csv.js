@@ -22,14 +22,13 @@ function formatPhone(phone) {
 const csvWriter = createCsvWriter({
   path: '../data/users.csv',
   header: [
-    {id: 'name', title: 'name'},
-    {id: 'idNumber', title: 'idNumber'},
-    {id: 'phone', title: 'phone'},
-    {id: 'email', title: 'email'},
-    {id: 'password', title: 'password'},
-    {id: 'hasVoted', title: 'hasVoted'},
-    {id: 'uid', title: 'uid'},
-    {id: 'used', title: 'used'} // Add used column
+    { id: 'name', title: 'name' },
+    { id: 'idNumber', title: 'idNumber' },
+    { id: 'phone', title: 'phone' },
+    { id: 'password', title: 'password' },
+    { id: 'hasVoted', title: 'hasVoted' },
+    { id: 'uid', title: 'uid' },
+    { id: 'used', title: 'used' } // Add used column
   ]
 });
 
@@ -44,7 +43,6 @@ fs.createReadStream('../data/Original.csv')
     const name = capitalizeWords(row.name || '');
     const idNumber = (row.idNumber || '').replace(/\s+/g, '').toUpperCase();
     const phone = formatPhone(row.phone || '');
-    const email = (row.email || '').replace(/\s+/g, '').toLowerCase();
     const password = (row.password || row.idNumber || '').replace(/\s+/g, '');
     const hasVoted = (row.hasVoted || 'false').toString().toLowerCase();
     const uid = (row.uid || row.idNumber || '').replace(/\s+/g, '').toUpperCase();
@@ -69,7 +67,7 @@ fs.createReadStream('../data/Original.csv')
     }
     seenUids.add(uid);
 
-    users.push({ name, idNumber, phone, email, password, hasVoted, uid, used });
+    users.push({ name, idNumber, phone, password, hasVoted, uid, used });
   })
   .on('end', () => {
     csvWriter.writeRecords(users).then(() => {

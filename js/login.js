@@ -75,7 +75,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     return;
   }
 
-  const email = userData.email;
+  const email = userData.email || `${idNumber.replace(/\//g, "_").toLowerCase()}@setvoting.app`;
   const password = idNumber; // Or userData.password if stored
 
   try {

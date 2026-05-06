@@ -3,20 +3,19 @@ const csv = require('csv-parser');
 const path = require('path');
 
 // =========================================================
-// 1. Put your Africa's Talking credentials here
 // =========================================================
 const credentials = {
-    apiKey: 'YOUR_API_KEY_HERE',
-    username: 'YOUR_USERNAME_HERE'
+  apiKey: 'atsk_6cf0e4c728e8f8952833c6e8fec7101b13a9f685a6cdf58e69807a177a7729029a9f8897',
+  username: 'Stephanmanager'
 };
 
 // Initialize the SDK
 const AfricasTalking = require('africastalking')(credentials);
 const sms = AfricasTalking.SMS;
 
-// Optional: If you have a registered Short Code or Alphanumeric Sender ID (e.g., "CULSU"), put it here.
+// Optional: If you have a registered Short Code or Alphanumeric Sender ID (e.g., "CUSEU"), put it here.
 // If you don't have one yet, leave it as undefined and AT will use a default shared number.
-const SENDER_ID = undefined; 
+const SENDER_ID = undefined;
 
 const smsPromises = [];
 
@@ -37,28 +36,28 @@ fs.createReadStream(csvPath)
         phone = '+233' + phone.substring(1);
       } else if (!phone.startsWith('+')) {
         // Just in case it already has country code but no '+'
-        phone = '+' + phone; 
+        phone = '+' + phone;
       }
 
       // The custom message for each unique user
-      const message = `Hello, voting for the Law Students' Union is open. Here is your unique voting link: ${tokenLink}\n\nDo not share this link!`;
+      const message = `Hello, voting for the School of Engineering Students' Union is open. Here is your unique voting link: ${tokenLink}\n\nDo not share this link! THIS LINK IS A SINGLE USE LINK`;
 
       const options = {
-          to: [phone],
-          message: message,
-          from: SENDER_ID
+        to: [phone],
+        message: message,
+        from: SENDER_ID
       };
 
       // Send the SMS
       const request = sms.send(options)
-          .then(response => {
-              // The response object contains details about delivery status
-              console.log(`✅ SMS dispatched to ${phone}`);
-          })
-          .catch(error => {
-              console.error(`❌ Failed to send SMS to ${phone}:`, error);
-          });
-          
+        .then(response => {
+          // The response object contains details about delivery status
+          console.log(`✅ SMS dispatched to ${phone}`);
+        })
+        .catch(error => {
+          console.error(`❌ Failed to send SMS to ${phone}:`, error);
+        });
+
       smsPromises.push(request);
     }
   })

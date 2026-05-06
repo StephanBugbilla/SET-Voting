@@ -116,7 +116,7 @@ onAuthStateChanged(auth, async (user) => {
             await updateDoc(userRef, { hasVoted: true });
             await signOut(auth);
             alert("You have completed voting. You will now be signed out.");
-            window.location.href = "index.html";
+            window.location.href = "link_used.html";
           }
 
         } catch (error) {
@@ -165,7 +165,7 @@ onAuthStateChanged(auth, async (user) => {
               await updateDoc(userRef, { hasVoted: true });
               await signOut(auth);
               alert("You have completed voting. You will now be signed out.");
-              window.location.href = "index.html";
+              window.location.href = "link_used.html";
             }
           } catch (error) {
             alert("Error while voting: " + error.message);

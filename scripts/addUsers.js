@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
 const fs = require("fs");
 const csv = require("csv-parser");
+const path = require("path");
 
 const serviceAccount = require("../config/serviceAccountKey.json");
 
@@ -13,7 +14,8 @@ const db = admin.firestore();
 const users = [];
 
 // Read users from users.csv
-fs.createReadStream("../data/users.csv")
+const csvPath = path.join(__dirname, "../data/users.csv");
+fs.createReadStream(csvPath)
   .pipe(csv())
   .on("data", (row) => {
     users.push(row);
@@ -25,21 +27,20 @@ fs.createReadStream("../data/users.csv")
 
     for (const user of users) {
       try {
-        // Use idNumber as UID
+        const generatedEmail = `${user.idNumber.replace(/\//g, "_").toLowerCase()}@setvoting.app`;
         await admin.auth().createUser({
           uid: user.idNumber,
-          email: user.email,
+          email: generatedEmail,
           password: user.password,
         });
 
         // Replace slashes with underscores for Firestore document ID
         const docId = user.idNumber.replace(/\//g, "_");
 
-        // Add user document to Firestore
         await db.collection("users").doc(docId).set({
           name: user.name,
           idNumber: user.idNumber,
-          email: user.email,
+          email: generatedEmail,
           phone: user.phone,
           hasVoted: user.hasVoted === "true" || user.hasVoted === true,
           used: user.used === "true" || user.used === true, // <-- Add this line
