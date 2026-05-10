@@ -22,7 +22,7 @@ const positions = ["president", "general secretary", "financial secretary", "pub
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     alert("You must be logged in to vote.");
-    window.location.href = "index.html";
+    window.location.replace("index.html");
     return;
   }
 
@@ -31,7 +31,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (!idNumber) {
     alert("User not logged in.");
-    window.location.href = "index.html";
+    window.location.replace("index.html");
     return;
   }
 
@@ -41,7 +41,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (querySnapshot.empty) {
     alert("User data not found.");
-    window.location.href = "index.html";
+    window.location.replace("index.html");
     return;
   }
 
@@ -52,7 +52,7 @@ onAuthStateChanged(auth, async (user) => {
   if (userData.hasVoted) {
     alert("You have already completed voting.");
     await signOut(auth);
-    window.location.href = "link_used.html";
+    window.location.replace("link_used.html");
     return;
   }
 
@@ -124,7 +124,7 @@ onAuthStateChanged(auth, async (user) => {
             await updateDoc(userRef, { hasVoted: true });
             await signOut(auth);
             alert("You have completed voting. You will now be signed out.");
-            window.location.href = "link_used.html";
+            window.location.replace("link_used.html");
           }
 
         } catch (error) {
@@ -176,7 +176,7 @@ onAuthStateChanged(auth, async (user) => {
               await updateDoc(userRef, { hasVoted: true });
               await signOut(auth);
               alert("You have completed voting. You will now be signed out.");
-              window.location.href = "link_used.html";
+              window.location.replace("link_used.html");
             }
           } catch (error) {
             alert("Error while voting: " + error.message);

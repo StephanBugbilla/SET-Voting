@@ -41,7 +41,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     if (userData.hasVoted === true || userData.used === true) {
       // Redirect to a custom page if link has been used or user has voted
-      window.location.href = "link_used.html";
+      window.location.replace("link_used.html");
       return;
     }
   }
@@ -91,7 +91,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     sessionStorage.setItem("userUid", userCredential.user.uid);
 
     // Redirect
-    window.location.href = "voting_page.html";
+    window.location.replace("voting_page.html");
   } catch (error) {
     alert("Authentication failed: " + error.message);
   }

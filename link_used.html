@@ -32,6 +32,13 @@
     <p>This voting link has already been used and cannot be accessed again.</p>
     <p>Thank you for participating in the election.</p>
   </div>
+  <script>
+    // Prevent the user from using the back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
+  </script>
 </body>
 
 </html>
