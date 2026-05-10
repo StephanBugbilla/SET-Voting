@@ -34,9 +34,9 @@
   </div>
   <script>
     // Prevent the user from using the back button
-    history.pushState(null, null, location.href);
+    window.history.pushState(null, "", window.location.href);
     window.onpopstate = function () {
-      history.go(1);
+      window.history.pushState(null, "", window.location.href);
     };
   </script>
 </body>

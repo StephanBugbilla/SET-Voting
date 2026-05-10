@@ -33,6 +33,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (querySnapshot.empty) {
       alert("No user found with this ID number.");
       document.getElementById("loginForm").querySelector("button[type='submit']").disabled = true;
+      document.body.style.visibility = 'visible';
       return;
     }
 
@@ -45,6 +46,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       return;
     }
   }
+  document.body.style.visibility = 'visible';
 });
 
 document.getElementById("loginForm").addEventListener("submit", async function(event) {
