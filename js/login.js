@@ -39,8 +39,8 @@ window.addEventListener("DOMContentLoaded", async () => {
     const userDoc = querySnapshot.docs[0];
     const userData = userDoc.data();
 
-    if (userData.used === true) {
-      // Redirect to a custom page if link has been used
+    if (userData.hasVoted === true || userData.used === true) {
+      // Redirect to a custom page if link has been used or user has voted
       window.location.href = "link_used.html";
       return;
     }
@@ -69,9 +69,9 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
   const userDoc = querySnapshot.docs[0];
   const userData = userDoc.data();
 
-  // Check if link already used
-  if (userData.used === true) {
-    alert("This link has already been used.");
+  // Check if link already used or user has voted
+  if (userData.hasVoted === true || userData.used === true) {
+    alert("This link has already been used or you have already voted.");
     return;
   }
 
