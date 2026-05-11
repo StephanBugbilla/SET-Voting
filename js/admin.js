@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
 import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
 
 // Use your actual Firebase config (copied from vote.js)
@@ -13,31 +14,42 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 const voteTable = document.getElementById("voteTable");
 
-// Optional: Simple password protection
-const adminPassword = "yourSecretPassword";
-if (prompt("Enter admin password:") !== adminPassword) {
+// Admin authentication using Firebase
+const adminEmail = prompt("Enter admin email:");
+const adminPassword = prompt("Enter admin password:");
+
+if (!adminEmail || !adminPassword) {
   alert("Access denied");
   window.location.href = "index.html";
+} else {
+  signInWithEmailAndPassword(auth, adminEmail, adminPassword)
+    .then(() => {
+      // Successful sign in, proceed
+      // Listen for live updates
+      onSnapshot(collection(db, "Candidates"), (snapshot) => {
+        let html = `<table>
+          <tr><th>Position</th><th>Name</th><th>Votes</th><th>Yes Votes</th><th>No Votes</th></tr>`;
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          html += `<tr>
+            <td>${data.position || ""}</td>
+            <td>${data.name || ""}</td>
+            <td>${data.Votes ?? ""}</td>
+            <td>${data.yesVotes ?? ""}</td>
+            <td>${data.noVotes ?? ""}</td>
+          </tr>`;
+        });
+        html += `</table>`;
+        voteTable.innerHTML = html;
+      });
+    })
+    .catch((error) => {
+      alert("Access denied: " + error.message);
+      window.location.href = "index.html";
+    });
 }
-
-// Listen for live updates
-onSnapshot(collection(db, "Candidates"), (snapshot) => {
-  let html = `<table>
-    <tr><th>Position</th><th>Name</th><th>Votes</th><th>Yes Votes</th><th>No Votes</th></tr>`;
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    html += `<tr>
-      <td>${data.position || ""}</td>
-      <td>${data.name || ""}</td>
-      <td>${data.Votes ?? ""}</td>
-      <td>${data.yesVotes ?? ""}</td>
-      <td>${data.noVotes ?? ""}</td>
-    </tr>`;
-  });
-  html += `</table>`;
-  voteTable.innerHTML = html;
-});
