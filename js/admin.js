@@ -20,10 +20,10 @@ const db = getFirestore(app);
 const voteTable = document.getElementById("voteTable");
 
 // Admin authentication using Firebase
-const adminEmail = prompt("Enter admin email:");
-const adminPassword = prompt("Enter admin password:");
+const adminEmail = "sbugbilla@gmail.com";
+const adminPassword = prompt("Enter admin password for " + adminEmail + ":");
 
-if (!adminEmail || !adminPassword) {
+if (!adminPassword) {
   alert("Access denied");
   window.location.href = "index.html";
 } else {
@@ -49,7 +49,7 @@ if (!adminEmail || !adminPassword) {
       });
     })
     .catch((error) => {
-      alert("Access denied: " + error.message);
+      alert("Access denied: " + error.message + ". If this is still wrong, the admin account may not exist in Firebase Auth.");
       window.location.href = "index.html";
     });
 }
