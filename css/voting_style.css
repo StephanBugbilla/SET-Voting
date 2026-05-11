@@ -102,13 +102,35 @@ main#votingContainer button:last-child {
 
 @media (max-width: 600px) {
   .voting-container {
-    padding: 20px;
-    margin: 20px 0;
-    max-width: 95vw;
+    padding: 0;
+    margin: 10px 0;
+    max-width: 100%;
+  }
+  main#votingContainer > div {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  main#votingContainer p {
+    font-size: 1rem;
+    gap: 12px;
+  }
+  .candidate-photo {
+    width: 55px;
+    height: 55px;
   }
   .school-logo,
   .login-logo {
-    max-width: 80px;
-    width: 25vw;
+    max-width: 70px;
+    width: 22vw;
+  }
+  main#votingContainer h3 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  main#votingContainer button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+    padding: 14px 20px;
   }
 }

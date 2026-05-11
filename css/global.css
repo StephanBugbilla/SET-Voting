@@ -114,3 +114,13 @@ h1, h2, h3 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+  .glass-panel {
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+  }
+}
