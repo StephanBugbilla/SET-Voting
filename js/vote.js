@@ -19,6 +19,24 @@ const db = getFirestore(app);
 
 const positions = ["president", "general secretary", "financial secretary", "public relations officer"]; // Must match Firestore exactly
 
+const candidatePhotoMap = {
+  bella: "Bella.jpg",
+  clement: "Clement.jpg",
+  joice: "Joice.jpg",
+  maxwell: "Maxwell.jpg",
+  peter: "Peter.jpg",
+  rita: "Rita.jpg",
+  steph: "steph.jpg",
+};
+
+function getCandidatePhoto(candidate) {
+  if (candidate.photoUrl) return candidate.photoUrl;
+  const name = (candidate.name || "").trim().toLowerCase();
+  const match = Object.keys(candidatePhotoMap).find((key) => name.includes(key));
+  if (match) return `assets/images/Candidate_photos/${candidatePhotoMap[match]}`;
+  return "assets/images/set_logo.jpg";
+}
+
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     alert("You must be logged in to vote.");
@@ -72,6 +90,7 @@ onAuthStateChanged(auth, async (user) => {
 
     // Create section for this position
     const section = document.createElement("div");
+    section.className = "position-section";
     section.innerHTML = `<h3>${position}</h3>`;
 
     if (candidatesSnapshot.size === 1) {
@@ -81,9 +100,10 @@ onAuthStateChanged(auth, async (user) => {
       const candidateId = docSnap.id;
 
       const candidateDiv = document.createElement("div");
+      candidateDiv.className = "candidate-card";
       candidateDiv.innerHTML = `
         <div class="candidate-photo">
-          <img src="${candidate.photoUrl || 'assets/images/Candidate_photos/default-avatar.png'}" alt="${candidate.name || 'Candidate'}'s photo">
+          <img src="${getCandidatePhoto(candidate)}" alt="${candidate.name || 'Candidate'}'s photo">
         </div>
         <p><strong>${candidate.name}</strong></p>
       `;
@@ -146,6 +166,7 @@ onAuthStateChanged(auth, async (user) => {
         const candidateId = docSnap.id;
 
         const candidateDiv = document.createElement("div");
+        candidateDiv.className = "candidate-card";
         const voteBtn = document.createElement("button");
         voteBtn.textContent = "Vote";
         voteBtn.disabled = !!userVotes[position];
@@ -186,7 +207,7 @@ onAuthStateChanged(auth, async (user) => {
         // Always show image for all positions
         candidateDiv.innerHTML = `
           <div class="candidate-photo">
-            <img src="${candidate.photoUrl || 'assets/images/Candidate_photos/default-avatar.png'}" alt="${candidate.name || 'Candidate'}'s photo">
+            <img src="${getCandidatePhoto(candidate)}" alt="${candidate.name || 'Candidate'}'s photo">
           </div>
           <p><strong>${candidate.name || "No Name"}</strong></p>
         `;
