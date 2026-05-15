@@ -10,24 +10,20 @@
 </head>
 
 <body style="visibility: hidden;">
+  <a href="admin.html" id="adminLoginBtn" style="position: absolute; top: 15px; right: 20px; color: var(--text-secondary); font-size: 0.8rem; text-decoration: none; opacity: 0.5; font-family: 'Outfit', sans-serif; transition: opacity 0.3s ease;">Admin</a>
   <div class="login-container glass-panel">
     <div class="logo-row">
       <img src="assets/images/set_logo.jpg" alt="School of Engineering Students' Union Logo" class="school-logo">
     </div>
     <h2 class="text-gradient">Hello Student, 👋</h2>
     <form id="loginForm">
-      <input type="text" id="idNumber" placeholder="Enter Your CSC ID (e.g., CSC/22/01/0001)" required>
+      <input type="text" id="idNumber"
+        placeholder="Enter Your ID (e.g., CSC/22/01/0001, INT/22/01/0001, LEC/22/01/0001)" required>
       <input type="submit" value="Login">
     </form>
-    <button id="adminLoginBtn" style="margin-top: 18px; width: 100%;" class="btn">Login as Admin</button>
   </div>
 
   <script type="module" src="js/login.js" defer></script>
-  <script>
-    document.getElementById("adminLoginBtn").onclick = function () {
-      window.location.href = "admin.html";
-    };
-  </script>
 </body>
 
 </html>

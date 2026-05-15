@@ -42,7 +42,7 @@ fs.createReadStream('../data/Original.csv')
     // Format fields
     const name = capitalizeWords(row.name || '');
     const idNumber = (row.idNumber || '').replace(/\s+/g, '').toUpperCase();
-    const phone = formatPhone(row.phone || '');
+    const phone = formatPhone(row.phone || row.Phone || '');
     const password = (row.password || row.idNumber || '').replace(/\s+/g, '');
     const hasVoted = (row.hasVoted || 'false').toString().toLowerCase();
     const uid = (row.uid || row.idNumber || '').replace(/\s+/g, '').toUpperCase();

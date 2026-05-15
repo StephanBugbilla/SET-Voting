@@ -27,6 +27,7 @@ const csvPath = path.join(__dirname, '../data/user_tokens.csv');
 fs.createReadStream(csvPath)
   .pipe(csv())
   .on('data', (row) => {
+    const name = (row.name || '').trim();
     let phone = (row.phone || '').trim();
     const tokenLink = (row.tokenLink || '').trim();
 
@@ -41,7 +42,8 @@ fs.createReadStream(csvPath)
       }
 
       // The custom message for each unique user
-      const message = `Hello, voting for the School of Engineering Students' Union is open. Here is your unique voting link: ${tokenLink}\n\nDo not share this link! THIS LINK IS A SINGLE USE LINK`;
+      const greetingName = name ? name : 'Student';
+      const message = `Hello ${greetingName}, voting for the School of Engineering Students' Union is open. Here is your unique voting link: ${tokenLink}\n\nDo not share this link! THIS LINK IS A SINGLE USE LINK`;
 
       const options = {
         to: [phone],
