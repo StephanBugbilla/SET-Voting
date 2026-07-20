@@ -14,9 +14,8 @@ const credentials = {
 const AfricasTalking = require('africastalking')(credentials);
 const sms = AfricasTalking.SMS;
 
-// Optional: If you have a registered Short Code or Alphanumeric Sender ID (e.g., "CUSEU"), put it here.
-// If you don't have one yet, leave it as undefined and AT will use a default shared number.
-const SENDER_ID = undefined;
+// Registered Alphanumeric Sender ID
+const SENDER_ID = "SETVOTES";
 
 const smsPromises = [];
 
@@ -32,12 +31,14 @@ fs.createReadStream(csvPath)
     const tokenLink = (row.tokenLink || '').trim();
 
     if (phone && tokenLink) {
-      // Format phone number to E.164 format (Africa's Talking strictly requires this)
-      // Assuming Ghanaian numbers (e.g., 0541234567 becomes +233541234567)
+      // Normalize phone number and format to E.164.
+      // This keeps a leading '+' if present and strips other non-digit characters.
+      phone = phone.replace(/[^+\d]/g, '');
       if (phone.startsWith('0')) {
         phone = '+233' + phone.substring(1);
+      } else if (phone.startsWith('233') && !phone.startsWith('+')) {
+        phone = '+' + phone;
       } else if (!phone.startsWith('+')) {
-        // Just in case it already has country code but no '+'
         phone = '+' + phone;
       }
 
@@ -47,15 +48,24 @@ fs.createReadStream(csvPath)
 
       const options = {
         to: [phone],
-        message: message,
-        from: SENDER_ID
+        message: message
       };
+
+      if (SENDER_ID) {
+        options.from = SENDER_ID;
+      }
+
+      console.log(`📤 Sending SMS to ${phone}`);
 
       // Send the SMS
       const request = sms.send(options)
         .then(response => {
-          // The response object contains details about delivery status
+          const recipients = response?.SMSMessageData?.Recipients || [];
           console.log(`✅ SMS dispatched to ${phone}`);
+          console.log('   Africa\'s Talking response:', JSON.stringify(response, null, 2));
+          recipients.forEach(recipient => {
+            console.log(`   recipient ${recipient.number}: status=${recipient.status} cost=${recipient.cost} messageId=${recipient.messageId || 'N/A'}`);
+          });
         })
         .catch(error => {
           console.error(`❌ Failed to send SMS to ${phone}:`, error);

@@ -25,15 +25,35 @@ fs.createReadStream(csvPath)
     let deletedCount = 0;
 
     for (const user of users) {
+      const docId = user.idNumber.replace(/\//g, "_");
+      let authDeleted = false;
+      let firestoreDeleted = false;
+
+      // Try to delete from Auth
       try {
         await admin.auth().deleteUser(user.idNumber);
-        const docId = user.idNumber.replace(/\//g, "_");
-        await db.collection("users").doc(docId).delete();
-        deletedCount++;
-        console.log(`✅ Deleted user ${user.idNumber} from Auth and Firestore`);
+        authDeleted = true;
       } catch (error) {
-        console.error(`❌ Failed to delete ${user.idNumber}:`, error.message);
+        if (error.code === 'auth/user-not-found') {
+          console.log(`ℹ️ User ${user.idNumber} not found in Auth (already deleted or never created)`);
+          authDeleted = true; // Mark as resolved for Auth
+        } else {
+          console.error(`❌ Failed to delete ${user.idNumber} from Auth:`, error.message);
+        }
+      }
+
+      // Try to delete from Firestore
+      try {
+        await db.collection("users").doc(docId).delete();
+        firestoreDeleted = true;
+      } catch (error) {
+        console.error(`❌ Failed to delete ${user.idNumber} from Firestore:`, error.message);
+      }
+
+      if (authDeleted || firestoreDeleted) {
+        deletedCount++;
+        console.log(`✅ Cleaned up user ${user.idNumber} (Auth: ${authDeleted ? 'Deleted/Not found' : 'Failed'}, Firestore: ${firestoreDeleted ? 'Deleted' : 'Failed'})`);
       }
     }
-    console.log(`🎉 All done! Total accounts deleted: ${deletedCount}`);
+    console.log(`🎉 All done! Total accounts cleaned up: ${deletedCount}`);
   });
