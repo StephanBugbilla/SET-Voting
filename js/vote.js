@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
-import { getFirestore, doc, updateDoc, increment, query, where, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
+import { getFirestore, doc, getDoc, updateDoc, increment, query, where, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -42,6 +42,47 @@ onAuthStateChanged(auth, async (user) => {
     alert("You must be logged in to vote.");
     window.location.replace("index.html");
     return;
+  }
+
+  // Get voting configuration / deadline
+  let isClosed = false;
+  let deadlineText = "";
+  try {
+    const configDoc = await getDoc(doc(db, "settings", "voting_config"));
+    if (configDoc.exists()) {
+      const configData = configDoc.data();
+      const endTime = new Date(configData.endTime);
+      deadlineText = configData.endTimeFormatted || "";
+      if (new Date() > endTime) {
+        isClosed = true;
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching voting configuration:", error);
+  }
+
+  if (isClosed) {
+    // Show closed message and sign out
+    alert(`Voting has officially closed. The deadline was ${deadlineText}.`);
+    const container = document.getElementById("votingContainer");
+    container.innerHTML = `
+      <div class="lockout-container" style="text-align: center; margin-top: 50px; font-family: sans-serif;">
+        <h2 style="color: #dc3545;">Voting is Closed</h2>
+        <p>The voting period has ended. The deadline was <strong>${deadlineText}</strong>.</p>
+        <p>Thank you for your participation.</p>
+        <button id="logoutBtn" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Go Back</button>
+      </div>
+    `;
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.replace("index.html");
+    });
+    return;
+  }
+
+  const descEl = document.querySelector(".voting-desc");
+  if (descEl && deadlineText) {
+    descEl.innerHTML += `<br><span style="color: #ffc107; font-weight: bold; display: block; margin-top: 10px;">Voting closes at: ${deadlineText}</span>`;
   }
 
   // Get idNumber from sessionStorage
